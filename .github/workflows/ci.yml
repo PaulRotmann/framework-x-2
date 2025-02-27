@@ -30,7 +30,10 @@ jobs:
           php-version: ${{ matrix.php }}
           coverage: xdebug
           ini-file: development
-      - run: php -m | grep xdebug
+      - name: Verify PHP and Xdebug installation
+        run: |
+          php -v
+          php -m | grep xdebug
       - run: composer install
       - run: vendor/bin/phpunit --coverage-text --coverage-clover=clover.xml
         if: ${{ matrix.php >= 7.3 }}
