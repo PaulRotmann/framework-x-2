@@ -35,6 +35,9 @@ jobs:
           php -v
           php -m | grep xdebug
       - run: composer install
+      - name: Run a single PHPUnit test to isolate the issue
+        run: vendor/bin/phpunit --verbose --filter FrameworkX\\Tests\\Io\\SapiHandlerTest::testSendResponseSendsEmptyResponseWithNoHeadersAndEmptyBodyAndAssignsNoContentTypeAndEmptyContentLength
+        if: ${{ matrix.php >= 7.3 }}
       - name: Run PHPUnit with verbose output
         run: vendor/bin/phpunit --verbose --coverage-text --coverage-clover=clover.xml
         if: ${{ matrix.php >= 7.3 }}
